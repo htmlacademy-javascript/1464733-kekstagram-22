@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Тимур Ярматов](https://up.htmlacademy.ru/javascript/22/user/1464733).
-* Наставник: `Неизвестно`.
+* Наставник: [Владимир Коршунов].(https://htmlacademy.ru/profile/bekobou).
 
 ---
 
