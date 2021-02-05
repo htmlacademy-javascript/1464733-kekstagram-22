@@ -8,21 +8,26 @@ const chooseNumber = (min, max) => {
     const rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand);
   }
-  console.log(' Неккоректно указан диапазон чисел.');
+  return (' Неккоректно указан диапазон чисел.');
 }
 
-const chooseFromBig = (min, max) => {
+const selectBackward = (min, max) => {
   if (min > max) {
     return Math.floor(max + Math.random() * (min + 1 - max));
   }
-  else chooseNumber(min, max);
+  else {
+    return chooseNumber(min, max);
+  }
 }
 
+selectBackward(0, 5);
 //ниже будет код cтрелочной функции checkMaximumLength
 
 const checkMaximumLength = (checkedString, maxLength) => {
   if (checkedString.length <= maxLength) {
     return checkedString;
   }
-  console.log(' Строка не проходит по длинне');
+  return (' Строка не проходит по длинне');
 };
+
+checkMaximumLength ('Это мой первый комментарий здесь!', 140);
