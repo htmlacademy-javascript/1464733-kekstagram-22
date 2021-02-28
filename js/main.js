@@ -11,6 +11,10 @@ const chooseNumber = (min, max) => {
   return (' Неккоректно указан диапазон чисел.');
 }
 
+const doNotRepeat = (min, max) => {
+  return Math.floor(chooseNumber(min, max) * Math.random());
+}
+
 const selectBackward = (min, max) => {
   if (min > max) {
     return Math.floor(max + Math.random() * (min + 1 - max));
@@ -38,7 +42,6 @@ const names = [
   'Владимир', 'Вячеслав', 'Воланд', 'Виктория', 'Валерия', 'Григорий', 'Герман', 'Геннадий', 'Галина', 'Гертруда',
   'Дмитрий', 'Денис', 'Довлат', 'Дарья', 'Дана',
 ];
-names;
 
 //Коллекция сообщений (массив)
 const messages = [
@@ -49,49 +52,48 @@ const messages = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
-messages;
 
-/* Создадим объект-генератор для дальнейшего создания массива списка комментариев */
-const useGenerationComment = () => {
-  const generateMessage = () => {
-    const index = chooseNumber(0, 5);
-    if (index <= messages.length - 1) {
-      return messages[index];
-    }
+const generateMessage = () => {
+  const index = chooseNumber(0, 5);
+  if (index <= messages.length - 1) {
+    return messages[index];
   }
-  const generateName = () => {
-    const pointer = chooseNumber(0, 24);
-    if (pointer <= names.length - 1) {
-      return names[pointer];
-    }
-  }
-  const nameGenerator = {
-    id: chooseNumber(15, 200),
-    avatar: 'img/avatar-{{chooseNumber(1, 6)}}',
-    message: generateMessage(),
-    name: generateName(),
-  };
-  nameGenerator();
+  return 'Некорректное значение';
 }
 
-/* Создадим объект-генератор для  для дальнейшего создания массива объектов описании фотографии */
-const useGenerationPhoto = () => {
-  const photoGenerator = {
-    id: chooseNumber(1, 25),
-    url: 'photos/{{chooseNumber(1, 25)}}',
-    description: 'Напишите здесь, чем ассоциуруется Ваша фотография',
-    likes: chooseNumber(15, 200),
-    comments: useGenerationComment(),
-  };
-  return photoGenerator;
+const generateName = () => {
+  const pointer = chooseNumber(0, 24);
+  if (pointer <= names.length - 1) {
+    return names[pointer];
+  }
+  return 'Некорректное значение';
 }
 
-/* Финальная генерация */
+const commentGenerator = {
+  id: chooseNumber(15, 200),
+  avatar: 'img/avatar' + doNotRepeat(1, 6) + '.svg',
+  message: generateMessage(),
+  name: generateName(),
+};
+
+const useGenerationPhoto = () =>
+  (
+    {
+      id: doNotRepeat(1, 25),
+      url: 'photos/' + doNotRepeat(1, 25) + '.jpg',
+      description: 'Напишите здесь, чем ассоциуруется Ваша фотография',
+      likes: chooseNumber(15, 200),
+      comments: commentGenerator,
+    }
+  );
+
 const generateFinal = (quantity) => {
   const photos = [];
   for (let i = 0; i < quantity; i++) {
     photos.push(useGenerationPhoto());
   }
-}
+  return photos;
+};
 
 generateFinal(25);
+
