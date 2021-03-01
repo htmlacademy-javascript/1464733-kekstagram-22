@@ -11,10 +11,6 @@ const chooseNumber = (min, max) => {
   return (' Неккоректно указан диапазон чисел.');
 }
 
-const doNotRepeat = (min, max) => {
-  return Math.floor(chooseNumber(min, max) * Math.random());
-}
-
 const selectBackward = (min, max) => {
   if (min > max) {
     return Math.floor(max + Math.random() * (min + 1 - max));
@@ -62,38 +58,44 @@ const generateMessage = () => {
 }
 
 const generateName = () => {
-  const pointer = chooseNumber(0, 24);
+  const pointer = chooseNumber(0, names.length);
   if (pointer <= names.length - 1) {
     return names[pointer];
   }
   return 'Некорректное значение';
 }
 
-const commentGenerator = {
-  id: chooseNumber(15, 200),
-  avatar: 'img/avatar' + doNotRepeat(1, 6) + '.svg',
-  message: generateMessage(),
-  name: generateName(),
-};
+const commentGenerator = () => {
+  const comments = [];
+  let countComment = chooseNumber(1, 1);
+  for (let i = 0; i <= countComment; i++) {
+    comments.push({
+      id: chooseNumber(15, 200),
+      avatar: 'img/avatar' + chooseNumber(1, 6) + '.svg',
+      message: generateMessage(),
+      name: generateName(),
+    });
+  }
+  return comments;
+}
 
-const useGenerationPhoto = () =>
+const useGenerationPhoto = (valueNumber) =>
   (
     {
-      id: doNotRepeat(1, 25),
-      url: 'photos/' + doNotRepeat(1, 25) + '.jpg',
+      id: valueNumber,
+      url: 'photos/' + valueNumber + '.jpg',
       description: 'Напишите здесь, чем ассоциуруется Ваша фотография',
       likes: chooseNumber(15, 200),
-      comments: commentGenerator,
+      comments: commentGenerator(),
     }
   );
 
 const generateFinal = (quantity) => {
   const photos = [];
   for (let i = 0; i < quantity; i++) {
-    photos.push(useGenerationPhoto());
+    photos.push(useGenerationPhoto(i));
   }
   return photos;
 };
 
 generateFinal(25);
-
