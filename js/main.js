@@ -67,7 +67,7 @@ const generateName = () => {
 
 const commentGenerator = () => {
   const comments = [];
-  let countComment = chooseNumber(1, 1);
+  const countComment = chooseNumber(0, 1);
   for (let i = 0; i <= countComment; i++) {
     comments.push({
       id: chooseNumber(15, 200),
@@ -82,8 +82,8 @@ const commentGenerator = () => {
 const useGenerationPhoto = (valueNumber) =>
   (
     {
-      id: valueNumber,
-      url: 'photos/' + valueNumber + '.jpg',
+      id: valueNumber + 1,
+      url: 'photos/' + (valueNumber + 1) + '.jpg',
       description: 'Напишите здесь, чем ассоциуруется Ваша фотография',
       likes: chooseNumber(15, 200),
       comments: commentGenerator(),
